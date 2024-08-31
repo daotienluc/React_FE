@@ -1,4 +1,3 @@
-// Điện gia dụng
 import { TabGroup, TabPanel, TabPanels } from "@headlessui/react";
 import React, { useEffect, useState } from "react";
 import ProductCard from "./../ProductCard/ProductCard";
@@ -37,7 +36,7 @@ function Screen() {
         <TabGroup>
           <TabPanels>
             <TabPanel>
-              <div className="grid grid-cols-5 py-3 gap-3 ml-3">
+              <div className="flex py-3 mx-3 gap-3">
                 {products.map((product, index) => (
                   <ProductCard
                     key={index}

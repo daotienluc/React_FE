@@ -6,6 +6,7 @@ import { EyeSlashFilledIcon } from "./../main/EyeSlashFilledIcon";
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function AdminLogin() {
   const [isVisible, setIsVisible] = React.useState(false);
@@ -31,11 +32,11 @@ function AdminLogin() {
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("role", response.data.role);
         localStorage.setItem("username", username);
-        alert(response.data.message);
+        toast.success(response.data.message);
         navigate("/admin/dashboard");
       }
     } catch (error) {
-      alert("Bạn không có quyền đăng nhập vào trang quản trị");
+      toast.error("Bạn không có quyền đăng nhập vào trang quản trị");
       console.error(error);
     }
   };

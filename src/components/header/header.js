@@ -5,6 +5,8 @@ import { SearchIcon } from "./SearchIcon";
 import { Button, Input, Link, User } from "@nextui-org/react";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { UilUserCircle, UilFileBlockAlt } from "@iconscout/react-unicons";
+import { toast } from "react-toastify";
 
 function Header() {
   const token = localStorage.getItem("token");
@@ -17,6 +19,14 @@ function Header() {
 
   const handleAddProduct = () => {
     navigate("/cartpage");
+  };
+
+  const handleLogOut = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("role");
+    localStorage.removeItem("username");
+    toast.success("Đăng xuất thành công!");
+    navigate("/");
   };
 
   const searchProducts = async (searchQuery) => {
@@ -87,13 +97,41 @@ function Header() {
         </div>
         <div>
           {token ? (
-            <User
-              name={username}
-              description="Product Designer"
-              avatarProps={{
-                src: "https://i.pravatar.cc/150?u=a04258114e29026702d",
-              }}
-            />
+            <div className="relative cursor-pointer group">
+              <User
+                name={username}
+                description="Product Designer"
+                avatarProps={{
+                  src: "https://i.pravatar.cc/150?u=a04258114e29026702d",
+                }}
+              />
+              <ul className="absolute w-40 hidden group-hover:block  bg-white py-3 rounded-lg shadow-lg">
+                <li className="flex">
+                  <img
+                    src="https://i.pravatar.cc/150?u=a04258114e29026702d"
+                    alt=""
+                    className="w-10 mx-3"
+                  />
+                  {username}
+                </li>
+                <li className="flex justify-evenly my-3 items-center hover:bg-slate-100 cursor-pointer">
+                  <UilUserCircle />
+                  <p className="text-xs">Thông tin tài khoản</p>
+                </li>
+                <li className="flex justify-evenly my-3 items-center hover:bg-slate-100 cursor-pointer">
+                  <UilFileBlockAlt />
+                  <p className="text-xs">Quản lý đơn hàng</p>
+                </li>
+                <Button
+                  onClick={handleLogOut}
+                  color="primary"
+                  variant="bordered"
+                  className="w-11/12 mx-2"
+                >
+                  Đăng xuất
+                </Button>
+              </ul>
+            </div>
           ) : (
             <>
               <Link as={RouterLink} to="/register" className="block">

@@ -9,7 +9,6 @@ function ProductManagement() {
   const [selectedCategory, setSelectedCategory] = useState("TẤT CẢ SẢN PHẨM");
 
   useEffect(() => {
-    // Hàm lấy danh sách sản phẩm từ API
     const fetchProducts = async () => {
       try {
         const response = await axios.get(
@@ -72,7 +71,7 @@ function ProductManagement() {
             <SelectItem key="LAPTOP MỎNG NHẸ">LAPTOP MỎNG NHẸ</SelectItem>
           </Select>
         </div>
-        <div className="grid grid-cols-5 gap-3 bg-gray-50">
+        <div className="flex gap-3 bg-gray-50">
           {filteredProducts.map((product) => (
             <div className="bg-white w-full" key={product._id}>
               {product.image && (

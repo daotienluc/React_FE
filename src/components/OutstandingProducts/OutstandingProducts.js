@@ -41,7 +41,7 @@ function OutstandingProducts() {
         <TabGroup>
           <TabPanels>
             <TabPanel>
-              <div className="grid grid-cols-5 gap-3 py-3 mx-3">
+              <div className="flex gap-3 py-3 mx-3">
                 {products.map((product, index) => (
                   <ProductCard
                     key={index}

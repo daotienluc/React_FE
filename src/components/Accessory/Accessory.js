@@ -36,7 +36,7 @@ function Accessory() {
         <TabGroup>
           <TabPanels>
             <TabPanel>
-              <div className="grid grid-cols-5 py-3 gap-3 ml-3">
+              <div className="flex py-3 gap-3 mx-3">
                 {products.map((product, index) => (
                   <ProductCard
                     key={index}

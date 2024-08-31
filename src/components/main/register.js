@@ -13,7 +13,7 @@ function Register() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState("user");
+  const role = "user";
 
   const navigate = useNavigate();
 
@@ -30,8 +30,6 @@ function Register() {
       );
       if (response.status === 201) {
         localStorage.setItem("token", response.data.token);
-        localStorage.setItem("role", response.data.role);
-        localStorage.setItem("username", username);
         toast.success(response.data.message);
         navigate("/login");
       }
