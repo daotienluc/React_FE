@@ -16,6 +16,8 @@ import AddProduct from "./components/Admin/AddProduct.js";
 import Login from "./components/Admin/AdminLogin.js";
 import ProductDetails from "./components/ProductDetails/ProductDetails.js";
 
+import CartPage from "./components/CartPage/CartPage.js";
+
 function App() {
   return (
     <NextUIProvider>
@@ -25,8 +27,12 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/cartpage" element={<CartPage />} />
 
-          <Route path="/product/productdetails" element={<ProductDetails />} />
+          <Route
+            path="/product/productdetails/:id"
+            element={<ProductDetails />}
+          />
 
           {/* Routes cho trang quản trị */}
           <Route path="/admin/Login" element={<Login />} />

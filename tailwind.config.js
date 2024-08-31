@@ -17,6 +17,7 @@ module.exports = {
         accessory: "#F97A90",
         houseware: "#394D9B",
         footer: "#E9EDF2",
+        background: "#F8F8FC",
       },
       backgroundImage: {
         "bg-sale": "url('/src/assets/img/bg_sale.svg')",

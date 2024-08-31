@@ -1,7 +1,7 @@
 // Sản phẩm nổi bật
 import { TabGroup, TabPanel, TabPanels } from "@headlessui/react";
 import React, { useEffect, useState } from "react";
-import ProductCard from "./ProductCard";
+import ProductCard from "./../ProductCard/ProductCard";
 import { Pagination } from "@nextui-org/react";
 import axios from "axios";
 

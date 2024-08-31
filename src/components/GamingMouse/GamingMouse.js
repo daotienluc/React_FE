@@ -1,7 +1,7 @@
 // Chuột gaming
 import { TabGroup, TabPanel, TabPanels } from "@headlessui/react";
 import React, { useEffect, useState } from "react";
-import ProductCard from "./ProductCard.js";
+import ProductCard from "./../ProductCard/ProductCard";
 import axios from "axios";
 
 function Houseware() {

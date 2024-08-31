@@ -1,7 +1,11 @@
 import Bglaptopgaming from "./../../assets/img/component-bg-laptop.jpg";
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
 import classNames from "classnames";
-import SlickSp from "./../frameworks/slickSp";
+import SlickLapTopGaming from "./SlickLapTopGaming";
+import LapTopAi from "./SlickLapTopAi";
+import SlickLapTopVanPhong from "./SlickLapTopVanPhong";
+import SlickLapTopSinhVien from "./SlickLapTopSinhVien";
+import SlickLapTopMongNhe from "./SlickLapTopMongNhe";
 
 function Laptopgaming() {
   return (
@@ -78,24 +82,32 @@ function Laptopgaming() {
           <TabPanels className=" absolute w-full">
             <TabPanel className="ml-64 mr-3">
               <div className="flex py-20 gap-3">
-                <SlickSp />
+                <SlickLapTopGaming />
               </div>
             </TabPanel>
 
             <TabPanel className="ml-64 mr-3">
-              <div className="flex py-20 gap-3">{/* <SlickSp /> */}</div>
+              <div className="flex py-20 gap-3">
+                <LapTopAi />
+              </div>
             </TabPanel>
 
             <TabPanel className="ml-64 mr-3">
-              <div className="flex py-20 gap-3">{/* <SlickSp /> */}</div>
+              <div className="flex py-20 gap-3">
+                <SlickLapTopVanPhong />
+              </div>
             </TabPanel>
 
             <TabPanel className="ml-64 mr-3">
-              <div className="flex py-20 gap-3">{/* <SlickSp /> */}</div>
+              <div className="flex py-20 gap-3">
+                <SlickLapTopSinhVien />
+              </div>
             </TabPanel>
 
             <TabPanel className="ml-64 mr-3">
-              <div className="flex py-20 gap-3">{/* <SlickSp /> */}</div>
+              <div className="flex py-20 gap-3">
+                <SlickLapTopMongNhe />
+              </div>
             </TabPanel>
           </TabPanels>
         </TabGroup>

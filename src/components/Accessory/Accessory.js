@@ -2,7 +2,7 @@
 import { TabGroup, TabPanel, TabPanels } from "@headlessui/react";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import ProductCard from "./ProductCard";
+import ProductCard from "./../ProductCard/ProductCard";
 
 function Accessory() {
   const [products, setProducts] = useState([]);

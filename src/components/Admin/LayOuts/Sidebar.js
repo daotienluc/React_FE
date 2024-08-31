@@ -3,7 +3,7 @@ import { Link as RouterLink } from "react-router-dom";
 
 function Sidebar() {
   return (
-    <div className="w-1/5 bg-slate-700">
+    <div className="w-1/5 bg-slate-700 h-screen">
       <h2 className="text-center font-bold text-slate-300 py-5 border-b-1">
         ADMIN
       </h2>

@@ -5,6 +5,7 @@ import { EyeSlashFilledIcon } from "./EyeSlashFilledIcon";
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function Login() {
   const [isVisible, setIsVisible] = React.useState(false);
@@ -31,11 +32,11 @@ function Login() {
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("role", response.data.role);
         localStorage.setItem("username", username);
-        alert(response.data.message);
+        toast.success(response.data.message);
         navigate("/");
       }
     } catch (error) {
-      alert("lỗi đăng nhập");
+      toast.error("lỗi đăng nhập");
       console.error(error);
     }
   };

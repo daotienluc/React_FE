@@ -1,18 +1,46 @@
-import React from "react";
+import React, { useState } from "react";
 import Logo from "./../../assets/img/logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { SearchIcon } from "./SearchIcon";
-import { Input, Link, User } from "@nextui-org/react";
-import { Link as RouterLink } from "react-router-dom";
+import { Button, Input, Link, User } from "@nextui-org/react";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function Header() {
   const token = localStorage.getItem("token");
   const username = localStorage.getItem("username");
 
+  const [searchQuery, setSearchQuery] = useState("");
+  const [products, setProducts] = useState([]);
+
+  const navigate = useNavigate();
+
+  const handleAddProduct = () => {
+    navigate("/cartpage");
+  };
+
+  const searchProducts = async (searchQuery) => {
+    console.log("từ khóa tìm kiếm là:", searchQuery);
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/api/products/search?q=${searchQuery}`
+      );
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      console.error("Lỗi tìm kiếm sản phẩm", error);
+    }
+  };
+
+  const handleSearch = async () => {
+    const result = await searchProducts(searchQuery);
+    setProducts(result);
+  };
+
   return (
     <div className="container mx-auto border-b-1 fixed z-10 bg-white">
       <div className="flex items-center justify-between h-24">
-        <Link className="cursor-pointer">
+        <Link className="cursor-pointer" as={RouterLink} to="/">
           <img src={Logo} alt="logo" className="w-8 h-8 mr-4" />
           <span className="text-blue-500 font-bold">LL.VN</span>
         </Link>
@@ -20,6 +48,7 @@ function Header() {
           <Input
             isClearable
             radius="lg"
+            onChange={(e) => setSearchQuery(e.target.value)}
             classNames={{
               label: "text-black/50 dark:text-white/90",
               input: [
@@ -43,9 +72,18 @@ function Header() {
             }}
             placeholder="Nhập từ khóa cần tìm"
             startContent={
-              <SearchIcon className="text-black/50 mb-0.5 dark:text-black/90 text-slate-400 pointer-events-none flex-shrink-0" />
+              <SearchIcon
+                onClick={handleSearch}
+                className="text-black/50 mb-0.5 dark:text-black/90 text-slate-400 cursor-pointer"
+              />
             }
           />
+          <ul className="bg-white p-3 rounded-lg">
+            {Array.isArray(products) &&
+              products.map((product) => (
+                <li key={product._id}>{product.name}</li>
+              ))}
+          </ul>
         </div>
         <div>
           {token ? (
@@ -69,10 +107,13 @@ function Header() {
         </div>
 
         <FontAwesomeIcon icon="fa-regular fa-bell" className="text-2xl" />
-        <div className="flex items-center">
+        <div
+          onClick={handleAddProduct}
+          className="flex items-center cursor-pointer hover:text-blue-700"
+        >
           <FontAwesomeIcon
             icon="fa-solid fa-cart-shopping"
-            className="text-2xl mr-2"
+            className="text-2xl mr-2 "
           />
           <div className="text-sm">
             <p>Giỏ hàng của bạn</p>

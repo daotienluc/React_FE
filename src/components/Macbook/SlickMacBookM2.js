@@ -3,18 +3,19 @@ import Slider from "react-slick";
 import styled from "styled-components";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import ProductCard from "../Laptopgaming/ProductCard";
+import ProductCard from "./../ProductCard/ProductCard";
 import axios from "axios";
 
 const StyledSlider = styled(Slider)`
   .slick-dots li button:before {
-    font-size: 13px;
+    font-size: 8px;
+    color: #fff;
   }
 `;
 
 const MultipleItems = () => {
   const settings = {
-    infinite: true,
+    infinite: false,
     arrows: false,
     dots: true,
     slidesToShow: 1,
@@ -22,7 +23,7 @@ const MultipleItems = () => {
   };
 
   const [products, setProducts] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState("LAPTOP GAMING");
+  const selectedCategory = "MacbookM2";
 
   const formatCurrency = (value) => {
     if (!value) return "";
@@ -61,6 +62,7 @@ const MultipleItems = () => {
             {group.map((product, productIndex) => (
               <ProductCard
                 key={productIndex}
+                id={product._id}
                 image={`${process.env.REACT_APP_API_URL}/${product.image}`}
                 discount={product.discount}
                 name={product.name}

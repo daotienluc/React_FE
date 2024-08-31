@@ -1,7 +1,7 @@
 // Điện gia dụng
 import { TabGroup, TabPanel, TabPanels } from "@headlessui/react";
 import React, { useEffect, useState } from "react";
-import ProductCard from "./ProductCard";
+import ProductCard from "./../ProductCard/ProductCard";
 import axios from "axios";
 
 function Screen() {
@@ -41,6 +41,7 @@ function Screen() {
                 {products.map((product, index) => (
                   <ProductCard
                     key={index}
+                    id={product.id}
                     image={`${process.env.REACT_APP_API_URL}/${product.image}`}
                     discount={product.discount}
                     name={product.name}

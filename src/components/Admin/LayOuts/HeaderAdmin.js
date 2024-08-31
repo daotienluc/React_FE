@@ -4,7 +4,7 @@ function HeaderAdmin() {
   const user = localStorage.getItem("username");
   return (
     <>
-      <div className="flex justify-end pr-5 py-3 border-b-1">
+      <div className="flex justify-end pr-5 py-3 border-b-1 ">
         <User
           name={`Welcome ${user}`}
           description="Product Designer"

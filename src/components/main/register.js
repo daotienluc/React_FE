@@ -4,6 +4,7 @@ import { EyeFilledIcon } from "./EyeFilledIcon";
 import { EyeSlashFilledIcon } from "./EyeSlashFilledIcon";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function Register() {
   const [isVisible, setIsVisible] = useState(false);
@@ -31,12 +32,12 @@ function Register() {
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("role", response.data.role);
         localStorage.setItem("username", username);
-        alert(response.data.message);
+        toast.success(response.data.message);
         navigate("/login");
       }
     } catch (error) {
       console.error(error);
-      alert("Lỗi tạo người dùng.");
+      toast.error("Lỗi tạo người dùng.");
     }
   };
 
