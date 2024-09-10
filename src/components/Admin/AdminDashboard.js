@@ -9,7 +9,10 @@ function AdminDashboard() {
 
   // Kiểm tra role có phải là admin không ?
   useEffect(() => {
-    if (role !== "admin") {
+    const token = localStorage.getItem(
+      process.env.REACT_APP_LOCAL_STORAGE_TOKEN_NAME
+    );
+    if (!token) {
       navigate("/admin/login");
     }
   }, [navigate, role]);

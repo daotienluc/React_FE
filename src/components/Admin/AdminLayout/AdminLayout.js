@@ -8,7 +8,7 @@ function AdminLayout({ children }) {
       <Sidebar />
       <div className="w-4/5">
         <HeaderAdmin />
-        <div className="m-5">{children}</div>
+        <div className="mx-5 mt-20 mb-5">{children}</div>
       </div>
     </div>
   );

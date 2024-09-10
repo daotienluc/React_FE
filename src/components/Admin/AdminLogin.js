@@ -21,22 +21,25 @@ function AdminLogin() {
   const handleLogin = async () => {
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/api/auth/admin/login`,
+        `${process.env.REACT_APP_API_URL}/auth/admin-login`,
         {
           username,
           password,
         }
       );
 
-      if (response.data.token) {
-        localStorage.setItem("token", response.data.token);
-        localStorage.setItem("role", response.data.role);
-        localStorage.setItem("username", username);
+      if (response.data.success) {
+        localStorage.setItem(
+          process.env.REACT_APP_LOCAL_STORAGE_TOKEN_NAME,
+          response.data.token
+        );
         toast.success(response.data.message);
         navigate("/admin/dashboard");
+      } else {
+        toast.error(response.data.message);
       }
     } catch (error) {
-      toast.error("Bạn không có quyền đăng nhập vào trang quản trị");
+      alert("Bạn không có quyền đăng nhập vào trang quản trị");
       console.error(error);
     }
   };

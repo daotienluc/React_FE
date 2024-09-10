@@ -4,13 +4,20 @@ import React from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { Button, Link } from "@nextui-org/react";
 
-const ProductCard = ({ id, image, discount, name, description, price }) => {
+const ProductCard = ({
+  id,
+  image,
+  discount,
+  name,
+  descriptionShort,
+  price,
+}) => {
   return (
     <>
       <div className="bg-white p-5 w-1/5">
         <Link
           as={RouterLink}
-          to={`/product/productdetails/${id}`}
+          to={`/product/productdetails/${id}/${name}`}
           className="block"
         >
           <div className="relative w-full">
@@ -24,8 +31,8 @@ const ProductCard = ({ id, image, discount, name, description, price }) => {
             <h6 className="text-sm font-semibold text-title my-3 line-clamp-2">
               {name}
             </h6>
-            <p className="text-xs line-clamp-3 h-12 text-content">
-              {description}
+            <p className="text-xs line-clamp-3 h-12 text-content break-words">
+              {descriptionShort}
             </p>
             <p className="font-bold text-blue-600 mt-2">{price}</p>
           </div>

@@ -30,7 +30,7 @@ function App() {
           <Route path="/cartpage" element={<CartPage />} />
 
           <Route
-            path="/product/productdetails/:id"
+            path="/product/productdetails/:id/:name"
             element={<ProductDetails />}
           />
 

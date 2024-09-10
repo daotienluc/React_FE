@@ -13,29 +13,27 @@ function Register() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const role = "user";
 
   const navigate = useNavigate();
 
   const HandleRegister = async () => {
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/api/auth/register`,
+        `${process.env.REACT_APP_API_URL}/register`,
         {
           username,
           password,
           email,
-          role,
         }
       );
-      if (response.status === 201) {
-        localStorage.setItem("token", response.data.token);
+      if (response.data.success) {
         toast.success(response.data.message);
         navigate("/login");
+      } else {
+        toast.error(response.data.message);
       }
     } catch (error) {
       console.error(error);
-      toast.error("Lỗi tạo người dùng.");
     }
   };
 

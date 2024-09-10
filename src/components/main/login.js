@@ -14,24 +14,26 @@ function Login() {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const role = "";
+  const [role, setRole] = useState("");
 
   const navigate = useNavigate();
 
   const handleLogin = async () => {
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/api/auth/login`,
+        `${process.env.REACT_APP_API_URL}/login`,
         {
           username,
           password,
           role,
         }
       );
+      console.log(response.data);
       if (response.data.token) {
-        localStorage.setItem("token", response.data.token);
-        localStorage.setItem("role", response.data.role);
-        localStorage.setItem("username", username);
+        localStorage.setItem(
+          process.env.REACT_APP_LOCAL_STORAGE_TOKEN_NAME,
+          response.data.token
+        );
         toast.success(response.data.message);
         navigate("/");
       }

@@ -1,32 +1,55 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Button, Select, SelectItem } from "@nextui-org/react";
+import { Button, Select, SelectItem, Chip } from "@nextui-org/react";
 import AdminLayout from "./AdminLayout/AdminLayout";
 import { toast } from "react-toastify";
+import { setHeaders } from "../api/setHeaders";
+import ProductCardAdmin from "./LayOuts/ProductCardAdmin";
 
 function ProductManagement() {
   const [products, setProducts] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("TẤT CẢ SẢN PHẨM");
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await axios.get(
-          `${process.env.REACT_APP_API_URL}/api/auth/products`
-        );
-        setProducts(response.data);
-      } catch (error) {
-        console.error("Lỗi khi lấy danh sách sản phẩm:", error);
-      }
-    };
+  const fetchProducts = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/auth/get-products`,
+        setHeaders()
+      );
+      setProducts(response.data.data);
+    } catch (error) {
+      console.error("Lỗi khi lấy danh sách sản phẩm:", error);
+    }
+  };
 
+  useEffect(() => {
+    // Hàm lấy danh sách sản phẩm từ API
     fetchProducts();
   }, []);
+
+  const handleChangeStatus = async (productId, newStatus) => {
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_URL}/auth/change-product-status/${productId}`,
+        { newStatus },
+        setHeaders()
+      );
+      if (response.data.success) {
+        toast.success("Cập nhật trạng thái đề thi thành công");
+        fetchProducts();
+      } else {
+        toast.error("Cập nhật lỗi");
+      }
+    } catch (error) {
+      console.error("Error fetching quizzes:", error);
+    }
+  };
 
   const deleteProduct = async (productId) => {
     try {
       await axios.delete(
-        `${process.env.REACT_APP_API_URL}/api/auth/products/${productId}`
+        `${process.env.REACT_APP_API_URL}/auth/delete-products/${productId}`,
+        setHeaders()
       );
       toast.success("Xóa sản phẩm thành công !");
       setProducts(products.filter((product) => product._id !== productId));
@@ -71,36 +94,14 @@ function ProductManagement() {
             <SelectItem key="LAPTOP MỎNG NHẸ">LAPTOP MỎNG NHẸ</SelectItem>
           </Select>
         </div>
-        <div className="flex gap-3 bg-gray-50">
+        <div className="grid grid-cols-5 gap-3 bg-gray-50">
           {filteredProducts.map((product) => (
-            <div className="bg-white w-full" key={product._id}>
-              {product.image && (
-                <img
-                  src={`${process.env.REACT_APP_API_URL}/${product.image}`}
-                  alt={product.name}
-                  className="w-full h-48 object-cover"
-                />
-              )}
-              <div className="flex justify-between flex-col h-48">
-                <h6 className="text-sm font-semibold text-title my-3 line-clamp-2">
-                  Tên sản phẩm: {product.name}
-                </h6>
-                <p className="text-xs line-clamp-3 h-12">
-                  Mô tả sản phẩm: {product.description}
-                </p>
-                <p className="font-bold text-xs text-black">
-                  Giá khuyến mãi: {product.discount}
-                </p>
-                <p className="font-bold text-blue-600 mt-2">
-                  Giá sản phẩm: {product.price}đ
-                </p>
-              </div>
-              <div>
-                <Button onClick={() => deleteProduct(product._id)}>
-                  Xóa sản phẩm
-                </Button>
-              </div>
-            </div>
+            <ProductCardAdmin
+              key={product._id}
+              product={product}
+              deleteProduct={deleteProduct}
+              handleChangeStatus={handleChangeStatus}
+            />
           ))}
         </div>
       </AdminLayout>

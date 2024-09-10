@@ -14,7 +14,7 @@ const StyledSlider = styled(Slider)`
 
 const MultipleItems = () => {
   const settings = {
-    infinite: true,
+    infinite: false,
     arrows: false,
     dots: true,
     slidesToShow: 1,
@@ -33,9 +33,9 @@ const MultipleItems = () => {
     const fetchProducts = async () => {
       try {
         const response = await axios.get(
-          `${process.env.REACT_APP_API_URL}/api/auth/products`
+          `${process.env.REACT_APP_API_URL}/auth/get-products-user`
         );
-        setProducts(response.data);
+        setProducts(response.data.data);
       } catch (error) {
         console.error("Lỗi lấy danh sách sản phẩm", error);
       }
@@ -62,10 +62,10 @@ const MultipleItems = () => {
               <ProductCard
                 key={productIndex}
                 id={product._id}
-                image={`${process.env.REACT_APP_API_URL}/${product.image}`}
+                image={`${process.env.REACT_APP_API_URL_IMAGE}/${product.image}`}
                 discount={product.discount}
                 name={product.name}
-                description={product.description}
+                descriptionShort={product.descriptionShort}
                 price={formatCurrency(product.price)}
               />
             ))}

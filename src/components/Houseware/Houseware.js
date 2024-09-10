@@ -16,9 +16,10 @@ function Houseware() {
     const fetchProducts = async () => {
       try {
         const response = await axios.get(
-          `${process.env.REACT_APP_API_URL}/api/auth/products`
+          `${process.env.REACT_APP_API_URL}/auth/get-products-user`
         );
-        const filteredProducts = response.data.filter(
+        const productsData = response.data.data;
+        const filteredProducts = productsData.filter(
           (product) => product.displayLocation === "Houseware"
         );
         setProducts(filteredProducts);
@@ -41,10 +42,11 @@ function Houseware() {
                 {products.map((product, index) => (
                   <ProductCard
                     key={index}
-                    image={`${process.env.REACT_APP_API_URL}/${product.image}`}
+                    id={product._id}
+                    image={`${process.env.REACT_APP_API_URL_IMAGE}/${product.image}`}
                     discount={product.discount}
                     name={product.name}
-                    description={product.description}
+                    descriptionShort={product.descriptionShort}
                     price={formatCurrency(product.price)}
                   />
                 ))}
