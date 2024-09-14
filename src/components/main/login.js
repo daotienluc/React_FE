@@ -15,6 +15,7 @@ function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("");
+  const [error, setError] = useState("");
 
   const navigate = useNavigate();
 
@@ -28,7 +29,6 @@ function Login() {
           role,
         }
       );
-      console.log(response.data);
       if (response.data.token) {
         localStorage.setItem(
           process.env.REACT_APP_LOCAL_STORAGE_TOKEN_NAME,
@@ -38,7 +38,7 @@ function Login() {
         navigate("/");
       }
     } catch (error) {
-      toast.error("lỗi đăng nhập");
+      setError("Username hoặc mật khẩu không đúng");
       console.error(error);
     }
   };
@@ -82,6 +82,7 @@ function Login() {
             }
             type={isVisible ? "text" : "password"}
           />
+          <p className="text-red-500">{error}</p>
         </div>
       ))}
       <Button

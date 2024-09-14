@@ -13,25 +13,54 @@ import {
 } from "@iconscout/react-unicons";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { jwtDecode } from "jwt-decode";
+import { toast } from "react-toastify";
 
 function ProductDetails() {
-  const { id, name } = useParams(); // Nhận tham số 'id' và 'name' từ URL
+  const token = localStorage.getItem("LL-token-react");
+  let userId = "";
+
+  if (token) {
+    const decoded = jwtDecode(token);
+    userId = decoded.id;
+  }
+  const { id, name } = useParams();
   const [product, setProduct] = useState(null);
+  const quantity = 1;
 
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        // const decodedName = decodeURIComponent(name);  // Giải mã tên sản phẩm
         const response = await axios.get(
           `${process.env.REACT_APP_API_URL}/auth/get-product-of-one/${id}/${name}`
         );
-        setProduct(response.data.data); // Lấy dữ liệu sản phẩm từ API
+        setProduct(response.data.data);
       } catch (error) {
         console.error("Lỗi lấy chi tiết sản phẩm", error);
       }
     };
     fetchProduct();
   }, [id, name]);
+
+  const handleAddProductCart = async () => {
+    if (!userId) {
+      toast.error("Vui lòng đăng nhập để thêm sản phẩm !");
+      return;
+    }
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_URL}/auth/add-to-cart`,
+        {
+          userId,
+          productId: id,
+          quantity,
+        }
+      );
+      toast.success("Thêm sản phẩm vào giỏ hàng thành công !");
+    } catch (error) {
+      console.error("Lỗi thêm giỏ hàng");
+    }
+  };
 
   const formatCurrency = (value) => {
     if (!value) return "";
@@ -122,7 +151,12 @@ function ProductDetails() {
                   <Button className="w-1/2" color="primary" variant="solid">
                     Mua ngay
                   </Button>
-                  <Button className="w-1/2" color="primary" variant="bordered">
+                  <Button
+                    onClick={handleAddProductCart}
+                    className="w-1/2"
+                    color="primary"
+                    variant="bordered"
+                  >
                     Thêm vào giỏ hàng
                   </Button>
                 </div>

@@ -1,8 +1,11 @@
 // components/ProductCard.js
-import React from "react";
-
+import React, { useContext } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { Button, Link } from "@nextui-org/react";
+import axios from "axios";
+import { jwtDecode } from "jwt-decode";
+import { toast } from "react-toastify";
+import CartContext from "../CartPage/CartContext";
 
 const ProductCard = ({
   id,
@@ -12,6 +15,37 @@ const ProductCard = ({
   descriptionShort,
   price,
 }) => {
+  const { setProducts, setDataQuantity } = useContext(CartContext);
+  const token = localStorage.getItem("LL-token-react");
+  let userId = "";
+
+  if (token) {
+    const decoded = jwtDecode(token);
+    userId = decoded.id;
+  }
+
+  const quantity = 1;
+
+  const handleAddProductCart = async () => {
+    if (!userId) {
+      toast.error("Vui lòng đăng nhập để thêm sản phẩm !");
+      return;
+    }
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_URL}/auth/add-to-cart`,
+        {
+          userId,
+          productId: id,
+          quantity,
+        }
+      );
+      setDataQuantity(response.data);
+      toast.success("Thêm sản phẩm vào giỏ hàng thành công !");
+    } catch (error) {
+      console.error("Lỗi thêm sản phẩm:");
+    }
+  };
   return (
     <>
       <div className="bg-white p-5 w-1/5">
@@ -37,7 +71,10 @@ const ProductCard = ({
             <p className="font-bold text-blue-600 mt-2">{price}</p>
           </div>
         </Link>
-        <Button className="w-full py-2 border-2 mt-3 rounded-md text-blue-700 font-bold">
+        <Button
+          onClick={handleAddProductCart}
+          className="w-full py-2 border-2 mt-3 rounded-md text-blue-700 font-bold"
+        >
           Thêm vào giỏ
         </Button>
       </div>

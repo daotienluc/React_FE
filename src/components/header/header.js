@@ -1,21 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext } from "react";
 import Logo from "./../../assets/img/logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Link, User } from "@nextui-org/react";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { UilUserCircle, UilFileBlockAlt } from "@iconscout/react-unicons";
-import { jwtDecode } from "jwt-decode";
 import HeaderSearch from "./HeaderSearch";
+import CartContext from "../CartPage/CartContext";
 
 function Header() {
   const token = localStorage.getItem("LL-token-react");
-  let username = "";
 
-  if (token) {
-    const decoded = jwtDecode(token);
-    username = decoded.username;
-  }
-
+  const { username, length } = useContext(CartContext);
   const navigate = useNavigate();
 
   const handleAddProduct = () => {
@@ -97,9 +92,10 @@ function Header() {
               icon="fa-solid fa-cart-shopping"
               className="text-2xl mr-2 "
             />
+
             <div className="text-sm">
               <p>Giỏ hàng của bạn</p>
-              <p>(0) sản phẩm</p>
+              <p>({length}) sản phẩm</p>
             </div>
           </div>
         </div>

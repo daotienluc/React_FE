@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, CircularProgress, Input } from "@nextui-org/react";
+import { CircularProgress, Input } from "@nextui-org/react";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { UilSearch, UilUsdCircle } from "@iconscout/react-unicons";

@@ -18,6 +18,7 @@ module.exports = {
         houseware: "#394D9B",
         footer: "#E9EDF2",
         background: "#F8F8FC",
+        backgroundCart: "rgb(255, 255, 255)",
       },
       backgroundImage: {
         "bg-sale": "url('/src/assets/img/bg_sale.svg')",
